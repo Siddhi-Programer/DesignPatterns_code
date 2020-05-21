@@ -33,6 +33,59 @@ class SingletonLazy {
 
 }
 
+// Synchronized Method - 
+// to avoid Data inconsistance problem in Multithreaded environment
+
+class SingletonSynchronized {
+	// only declaration of Class instance
+	private static SingletonSynchronized instance;
+
+	// private Constructor
+	private SingletonSynchronized() {
+	}
+
+	// public Static Synchronized method to return instance
+	public static synchronized SingletonSynchronized getInstance() {
+		if (instance == null) {
+
+			// instance crated only when called (Lazy Initilization)
+			instance = new SingletonSynchronized();
+		}
+		return instance;
+	}
+}
+
+
+//Synchronized block - 
+//to avoid Data inconsistance problem in Multithreaded environment
+
+class SingletonSynchronizedBlock {
+	// only declaration of Class instance
+	private static SingletonSynchronizedBlock instance;
+
+	// private Constructor
+	private SingletonSynchronizedBlock() {
+	}
+
+	// public Static Synchronized method to return instance
+	public static synchronized SingletonSynchronizedBlock getInstance() {
+		if (instance == null) {
+			// Synchronized block 
+            synchronized (SingletonSynchronizedBlock.class) {
+            	if (instance == null) {
+            	// instance crated only when called (Lazy Initilization)
+    			instance = new SingletonSynchronizedBlock();
+            	}
+			}
+			
+		}
+		return instance;
+	}
+}
+
+
+
+
 public class SingletonExample {
 
 	public static void main(String[] args) {
@@ -51,6 +104,12 @@ public class SingletonExample {
 		System.out.println("instance3.equals(instanc4) : " + instance3.equals(instance4));
 		System.out.println(instance3);
 		System.out.println(instance4);
+		
+		SingletonSynchronized i5 = SingletonSynchronized.getInstance();
+		SingletonSynchronized i6 = SingletonSynchronized.getInstance();
+		System.out.println(i5);
+		System.out.println(i6);
+		System.out.println("i5.equals(i6) : " + i5.equals(i6));
 		
 	}
 
